@@ -7,7 +7,10 @@ int main()
 {
     std::cout<<"\n";
     Bank bank;
-    bank.createAccount();
-    bank.removeAccount(1);
+    User user=bank.createAccount();
+    user.save(100.23);
+    bank.save(user,120);
+    user.getInfo();
+    bank.showStatus(user);
     return 0;
 }

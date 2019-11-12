@@ -1,9 +1,7 @@
 #include <iostream>
 #include <string>
 #include "User.h"
-#include <list>
 #include <map>
-#include <algorithm>
 #ifndef class_bank
 #define class_bank class_bank
 
@@ -23,70 +21,24 @@ private:
     */
     std::map<int, User> userMap;
 
-    User fetchUser(int accountId)
-    {
-        if (userMap.empty() || userMap.count(accountId) == 0)
-        {
-            std::string msg = "\033[31m[ERROR]NO ACCOUNTS FOUND.\033[0m";
-            throw std::out_of_range(msg);
-        }
-        return userMap[accountId];
-    }
+    User fetchUser(int accountId);
 
 public:
     Bank() {}
     ~Bank() {}
     //create an account and put it in the list
-    void createAccount()
-    {
-        std::cout << YELLOW << "Creating New Account..." << RESET << "\n";
-        std::string username;
-        std::string password;
-        std::cout << BLUE << "Please enter your username:" << RESET;
-        std::cin >> username;
-        std::cout << BLUE << "Please enter your password:" << RESET;
-        std::cin >> password;
-        User user(username, password);
-        int accountId = user.getAccountId();
-        userMap[accountId] = user;
-        std::cout << GREEN << "[SUCCESS]Account Created." << RESET << "\n";
-        std::cout << "--------------------"
-                  << "\n";
-        std::cout << YELLOW << "Dear " << username << ", your account info is:" << RESET << "\n";
-        user.getInfo();
-        std::cout << "--------------------"
-                  << "\n\n";
-    }
+    User createAccount();
 
     //Is remove account really a good idea?
-    bool removeAccount(int accountId)
-    {
-        std::cout << YELLOW << "Signing off Accounts..." << RESET << "\n";
+    bool removeAccount(int accountId);
 
-        /** Mind that User::accountId is modified with 'static', newing temporary user instance affects accountId. 
-         * (Maybe I should remove the default constructor..)
-         */
+    // operations on deposit
 
-        //check validity before removal
-        int accountID;
-        std::string username;
-        std::string password;
-        std::cout << BLUE << "Please enter your account ID:" << RESET;
-        std::cin >> accountID;
-        std::cout << BLUE << "Please enter your username:" << RESET;
-        std::cin >> username;
-        std::cout << BLUE << "Please enter your password:" << RESET;
-        std::cin >> password;
+    bool save(User user, double value);
 
-        if (!fetchUser(accountId).isValid(accountID, username, password))
-        {
-            std::cout << RED << "[ERROR]Permission Denied." << RESET << "\n";
-            return false;
-        }
-        userMap.erase(accountId);
-        std::cout << GREEN << "[SUCCESS]Account " << accountId << " removed." << RESET << "\n";
-        return true;
-    }
+    bool withdraw(User user, double value);
+
+    void showStatus(User user);
 };
 
 #endif
