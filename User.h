@@ -18,17 +18,6 @@ private:
     std::string password;
     double deposit;
 
-    bool isValid(int accountId, std::string username, std::string password)
-    {
-        if ((accountId == this->accountId) && (password == this->password) && (username == this->username))
-        {
-            return true;
-        }
-        std::cout << RED << "[ERROR]Bad credentials!" << RESET
-                  << "\n";
-        return false;
-    }
-
 public:
     explicit User() {}
     explicit User(std::string username, std::string password)
@@ -103,6 +92,17 @@ public:
         std::cout << GREEN << "[-]Account ID:" << RESET << BLUE << this->accountId << RESET << "\n";
         std::cout << GREEN << "[-]Username:" << RESET << BLUE << this->username << RESET << "\n";
         std::cout << GREEN << "[-]Deposit:" << RESET << BLUE << this->deposit << RESET << "\n";
+    }
+
+    bool isValid(int accountId, std::string username, std::string password)
+    {
+        if ((accountId == this->accountId) && (password == this->password) && (username == this->username))
+        {
+            return true;
+        }
+        std::cout << RED << "[ERROR]Bad credentials!" << RESET
+                  << "\n";
+        return false;
     }
 };
 

@@ -1,11 +1,13 @@
-#include<iostream>
+#include <iostream>
 #include "User.h"
-int User::accountId=0;
+#include "Bank.h"
+int User::accountId = 0;
 
-int main(){
-    User u1("H","222");
-    u1.getInfo();
-    u1.setPassword("Happy");
-    u1.withdraw(100);
+int main()
+{
+    std::cout<<"\n";
+    Bank bank;
+    bank.createAccount();
+    bank.removeAccount(1);
     return 0;
 }
