@@ -1,49 +1,41 @@
-#include <iostream>
-#include <string>
-#ifndef class_user
-#define class_user class_user
-
-//Make program beautiful
-#define RED "\033[31m"
-#define GREEN "\033[32m"
-#define YELLOW "\033[33m"
-#define BLUE "\033[34m"
-#define RESET "\033[0m"
+#pragma once
+#include<iostream>
+#include<string>
 
 class User
 {
 private:
-    static int accountId;
-    std::string username;
-    std::string password;
-    double deposit;
+	static int accountId;
+	std::string username;
+	std::string password;
+	double deposit;
 
 public:
-    explicit User() {}
-    explicit User(std::string username, std::string password);
+	User();
+	User(std::string username, std::string password);
+	
+	//getters and setters
+	void setUsername(std::string username);
 
-    ~User() {}
+	void setPassword(std::string password);
 
-    //getters and setters
-    void setUsername(std::string username);
+	void setDeposit(double value);
 
-    void setPassword(std::string newPassword);
+	bool save(int value);
 
-    bool save(double value);
+	bool withdraw(int value);
 
-    bool withdraw(double value);
+	int getAccountId();
 
-    int getAccountId();
+	std::string getUsername();
 
-    std::string getUsername();
+	std::string getPassword();
 
-    std::string getPassword();
+	double getDeposit();
 
-    double getDeposit();
+	void getInfo();
 
-    void getInfo();
-
-    bool isValid(int accountId, std::string username, std::string password);
+	bool isValid(int accountId,std::string username,std::string password);
+	~User();
 };
 
-#endif
