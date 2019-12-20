@@ -17,13 +17,13 @@ public:
 	//getters and setters
 	void setUsername(std::string username);
 
-	void setPassword(std::string password);
+	void setPassword(int accountId,std::string password);
 
 	void setDeposit(double value);
 
-	bool save(int value);
+	bool save(double value);
 
-	bool withdraw(int value);
+	bool withdraw(double value);
 
 	int getAccountId();
 

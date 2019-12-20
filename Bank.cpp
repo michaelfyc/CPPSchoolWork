@@ -12,7 +12,7 @@ Bank::Bank()
 {
 }
 
-User Bank::createAccount()
+User* Bank::createAccount()
 {
 	std::cout << YELLOW << "Creating New Account..." << RESET << "\n";
 	std::string username;
@@ -22,65 +22,117 @@ User Bank::createAccount()
 	std::cout << BLUE << "Please enter your password:" << RESET;
 	std::cin >> password;
 	User user(username, password);
-	usr = user;
+	usr = &user;
 	int accountId = user.getAccountId();
-	userMap[accountId] = usr;
+	userMap[accountId] = user;
 	std::cout << GREEN << "[SUCCESS]Account Created." << RESET << "\n";
 	std::cout << "--------------------"
 		<< "\n";
 	std::cout << YELLOW << "Dear " << username << ", your account info is:" << RESET << "\n";
 	user.getInfo();
-	std::cout << "--------------------"
-		<< "\n\n";
 	return usr;
 }
 
-User Bank::getUser(int accountId)
+User* Bank::getUser(int accountId)
 {	
 	if (userMap.empty() || userMap.count(accountId) == 0)
 	{
-		std::string msg = "\033[31m[ERROR]NO ACCOUNTS FOUND.\033[0m";
+		std::string msg = "\033[31m[ERROR]NO ACCOUNT FOUND.\033[0m";
 		throw std::out_of_range(msg);
 	}
-	return userMap[accountId];
+	usr = &userMap[accountId];
+	return usr;
 }
 
 bool Bank::save(int accountId, double value)
 {
-	if (getUser(accountId).save(value)) {
-		
-		std::cout << GREEN << "[SUCCESS]You have saved $" << value << " into your account." << RESET
-			<< "\n";
-		return true;
+	try {
+		if (getUser(accountId)->save(value)) {
+
+			std::cout << GREEN << "[SUCCESS]You have saved $" << value << " into your account." << RESET
+				<< "\n";
+			std::cout << "--------------------"
+				<< "\n\n";
+			return true;
+		}
+	}
+	catch (std::out_of_range e) {
+		std::cout<<"\033[31m[ERROR]NO ACCOUNT FOUND.\033[0m"<<"\n";
+		std::cout << "--------------------"
+			<< "\n\n";
+		return false;
 	}
 	return false;
 }
 
 bool Bank::withdraw(int accountId, double value)
 {
-	return getUser(accountId).withdraw(value);
+	try {
+		if (getUser(accountId)->withdraw(value)) {
+
+			std::cout << GREEN << "[SUCCESS]You have withdrawn $" << value << " into your account." << RESET
+				<< "\n";
+			std::cout << "--------------------"
+				<< "\n\n";
+			return true;
+		}
+	}
+	catch (std::out_of_range e) {
+		std::cout << RED<<"[ERROR]NO ACCOUNT FOUND." <<RESET<< "\n";
+		std::cout << "--------------------"
+			<< "\n\n";
+		return false;
+	}
+	return false;
 }
 
 void Bank::getInfo(int accountId)
 {
-	int accountID;
 	std::string username;
 	std::string password;
-	std::cout << BLUE << "Please enter your account ID:" << RESET;
-	std::cin >> accountID;
 	std::cout << BLUE << "Please enter your username:" << RESET;
 	std::cin >> username;
 	std::cout << BLUE << "Please enter your password:" << RESET;
 	std::cin >> password;
-	if (getUser(accountId).isValid(accountID, username, password))
-	{
-		std::cout << YELLOW << "Account Info:" << RESET << "\n";
-		getUser(accountId).getInfo();
+	try {
+		if (getUser(accountId)->isValid(accountId, username, password))
+		{
+			std::cout << YELLOW << "Account Info:" << RESET << "\n";
+			getUser(accountId)->getInfo();
+			std::cout << "--------------------"
+				<< "\n\n";
+			return;
+		}
+		std::cout << RED << "[ERROR]Permission Denied." << RESET << "\n";
 		std::cout << "--------------------"
 			<< "\n\n";
-		return;
 	}
-	std::cout << RED << "[ERROR]Permission Denied." << RESET << "\n";
+	catch (std::out_of_range e) {
+		std::cout << RED << "[ERROR]NO ACCOUNT FOUND." << RESET << "\n";
+		std::cout << "--------------------"
+			<< "\n\n";
+	}
+}
+
+
+
+int Bank::getSize()
+{
+	return (int)userMap.size();
+}
+
+void Bank::changePassword(int accountId)
+{
+	std::string newPassword;
+	std::cout << BLUE << "Please enter your new passord:" << RESET;
+	std::cin >> newPassword;
+	try { 
+		getUser(accountId)->setPassword(accountId, newPassword); 
+	}
+	catch(std::out_of_range e){
+		std::cout << RED << "[ERROR]NO ACCOUNT FOUND." << RESET << "\n";
+		User* getUser(int accountId);
+	}
 }
 
 

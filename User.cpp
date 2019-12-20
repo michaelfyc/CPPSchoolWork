@@ -27,20 +27,17 @@ void User::setUsername(std::string username)
 	this->username = username;
 }
 
-void User::setPassword(std::string newPassword)
+void User::setPassword(int accountId,std::string newPassword)
 {
 	//check validity before changing password
-	int accountID;
 	std::string username;
 	std::string oldPassword;
-	std::cout << BLUE << "Please enter your account ID:" << RESET;
-	std::cin >> accountID;
 	std::cout << BLUE << "Please enter your username:" << RESET;
 	std::cin >> username;
 	std::cout << BLUE << "Please enter your original password:" << RESET;
 	std::cin >> oldPassword;
 
-	if (isValid(accountID, username, oldPassword))
+	if (isValid(accountId, username, oldPassword))
 	{
 		this->password = newPassword;
 		std::cout << GREEN << "[SUCCESS]Password changing successful!" << RESET << "\n";
@@ -52,7 +49,7 @@ void User::setDeposit(double value)
 	this->deposit = value;
 }
 
-bool User::save(int value)
+bool User::save(double value)
 {
 	if (value < 0)
 	{
@@ -63,7 +60,7 @@ bool User::save(int value)
 	return true;
 }
 
-bool User::withdraw(int value)
+bool User::withdraw(double value)
 {	
 	if (value < 0)
 	{
@@ -77,8 +74,6 @@ bool User::withdraw(int value)
 		return false;
 	}
 	this->deposit -= value;
-	std::cout << GREEN << "[SUCCESS]You have withdrawn $" << value << " from your account." << RESET
-		<< "\n";
 	return true;
 }
 

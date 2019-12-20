@@ -6,14 +6,16 @@ class Bank
 {
 private:
 	std::map<int, User> userMap;
-	User usr;
+	User* usr;
+	User* getUser(int accountId);
 public:
 	Bank();
-	User createAccount();
-	User getUser(int accountId);
+	User* createAccount();
 	bool save(int accountId,double value);
 	bool withdraw(int accountId, double value);
 	void getInfo(int accoutId);
+	int getSize();
+	void changePassword(int accountId);
 	~Bank();
 };
 
