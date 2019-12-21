@@ -13,11 +13,11 @@ private:
 public:
 	User();
 	User(std::string username, std::string password);
-	
+
 	//getters and setters
 	void setUsername(std::string username);
 
-	void setPassword(int accountId,std::string password);
+	void setPassword(int accountId, std::string password);
 
 	void setDeposit(double value);
 
@@ -35,7 +35,7 @@ public:
 
 	void getInfo();
 
-	bool isValid(int accountId,std::string username,std::string password);
+	bool isValid(std::string username, std::string password);
 	~User();
 };
 

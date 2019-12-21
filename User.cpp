@@ -27,7 +27,7 @@ void User::setUsername(std::string username)
 	this->username = username;
 }
 
-void User::setPassword(int accountId,std::string newPassword)
+void User::setPassword(int accountId, std::string newPassword)
 {
 	//check validity before changing password
 	std::string username;
@@ -37,7 +37,7 @@ void User::setPassword(int accountId,std::string newPassword)
 	std::cout << BLUE << "Please enter your original password:" << RESET;
 	std::cin >> oldPassword;
 
-	if (isValid(accountId, username, oldPassword))
+	if (isValid(username, oldPassword))
 	{
 		this->password = newPassword;
 		std::cout << GREEN << "[SUCCESS]Password changing successful!" << RESET << "\n";
@@ -61,7 +61,7 @@ bool User::save(double value)
 }
 
 bool User::withdraw(double value)
-{	
+{
 	if (value < 0)
 	{
 		std::cout << RED << "[ERROR]Invalid input." << RESET << "\n";
@@ -105,9 +105,9 @@ void User::getInfo()
 }
 
 
-bool User::isValid(int accountId, std::string username, std::string password)
+bool User::isValid(std::string username, std::string password)
 {
-	if ((accountId == this->accountId) && (password == this->password) && (username == this->username))
+	if ((password == this->password) && (username == this->username))
 	{
 		return true;
 	}
